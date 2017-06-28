@@ -1,0 +1,8 @@
+.idea
+node_modules/
+documentation-output/
+*.map
+public/*.html
+public/js
+public/style
+public/images

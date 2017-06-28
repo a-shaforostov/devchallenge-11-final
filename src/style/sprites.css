@@ -1,0 +1,17 @@
+.img-sprite {
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+    margin-right: 10px;
+    line-height: 36px;
+    margin-top: 2px;
+}
+.img-facebook {
+    background-image: url("../images/sprites/facebook.png");
+}
+.img-google-plus {
+    background-image: url("../images/sprites/google-plus.png");
+}
+.img-twitter {
+    background-image: url("../images/sprites/twitter.png");
+}

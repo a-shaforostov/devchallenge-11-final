@@ -1,0 +1,433 @@
+html {
+  font-family: Arial, sans-serif;
+}
+
+/* Щоб появлення вертикального скролера не рухало контент вліво */
+body {
+  width: calc(~"100vw - 20px") !important;
+  padding: 20px;
+}
+
+input[type="datetime-local"] {
+  height: inherit;
+}
+
+.btn:focus {
+  background-color: #2ab7a9;
+}
+
+/* Відключити виділення тексту */
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+table {
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+/* HEADER СТОРІНКИ */
+
+header {
+  position: relative;
+  display: inline-block;
+  //height: 60px;
+  height: 100%;
+  left: 50%;
+  min-width: 420px;
+  transform: translateX(-50%);
+
+  &>* {
+    margin-left: 0;
+    margin-right: 50px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  #create-event {
+    float: left;
+    margin: 10px 50px 0 0;
+  }
+
+  .nav-block {
+    float: left;
+    width: 350px;
+    margin-top: 10px;
+    background-color: rgba(43, 187, 173, 0.31);
+    text-align: center;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12), 0 3px 1px -2px rgba(0,0,0,.2);
+
+    .prev-period-button {
+      float: left;
+    }
+
+    .period-label {
+      line-height: 35px;
+      font-size: 20px;
+    }
+
+    .next-period-button {
+      float: right;
+    }
+  }
+
+  .scale {
+    float: left;
+    margin-top: 10px;
+
+    .btn-group {
+      font-size: 0;
+      box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+
+      .btn {
+        border-radius: 0;
+        box-shadow: none;
+
+        &:first-child {
+          border-radius: 3px 0 0 3px;
+        }
+
+        &:last-child {
+          border-radius: 0 3px 3px 0;
+        }
+
+        &.selected {
+          background-color: #2bbbad;
+        }
+      }
+    }
+  }
+
+}
+
+/* КОНТЕНТ СТОРІНКИ */
+
+main {
+  margin-top: 30px;
+}
+
+/* ДЕНЬ ТА ТИЖДЕНЬ */
+
+#week-placeholder {
+
+  .event {
+    position: absolute;
+    box-sizing: border-box;
+    padding: 3px 5px;
+    border: 1px solid #5C935C;
+    background-color: lightgreen;
+    font-size: 0.8rem;
+    word-wrap: break-word;
+    cursor: default;
+    overflow: hidden;
+
+    .time {
+      font-size: 0.9em;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+  }
+
+  .long-wrapper {
+    position: relative;
+
+    .header-table {
+      margin-bottom: 10px;
+
+      tr.week-full {
+        height: 20px;
+
+        &:last-child {
+          height: 10px;
+        }
+
+        .day-full {
+          padding: 0;
+          border: 1px solid lightgray;
+
+          &.selected-day {
+            background-color: rgba(0, 0, 255, 0.3);
+          }
+        }
+      }
+    }
+
+    .long-events {
+      position: relative;
+
+      .long-event {
+        position: absolute;
+        box-sizing: border-box;
+        margin: 2px;
+        padding: 3px 5px;
+        border: 1px solid gray;
+        background-color: lightgreen;
+        font-size: 0.8rem;
+        line-height: .8;
+        word-wrap: break-word;
+        cursor: default;
+        overflow: hidden;
+      }
+    }
+
+  }
+
+  table.grid-table {
+    width: 100%;
+
+    .day-captions {
+      border: 1px solid rgba(0, 0, 0, 0);
+
+      .day-col {
+        font-weight: bold;
+      }
+    }
+
+    td {
+      padding: 0;
+    }
+
+    thead tr td {
+      text-align: center;
+      font-weight: bold;
+    }
+
+    tbody {
+      .hours-wrapper {
+        position: relative;
+
+        .hours {
+          position: absolute;
+          width: 100%;
+
+          .hour-line {
+            box-sizing: border-box;
+            height: 42px;
+            margin-bottom: -1px;
+            border: 1px solid lightgray;
+
+            .half {
+              height: 21px;
+              margin-bottom: 20px;
+              border-bottom: 1px dotted lightgray;
+            }
+          }
+        }
+      }
+      .hours-labels {
+        width: 50px;
+        margin-top: -1px;
+
+        .hour-label {
+          box-sizing: border-box;
+          height: 42px;
+          margin-bottom: -1px;
+          margin-right: -1px;
+          padding: 2px;
+          border: 1px solid lightgray;
+          font-size: 0.8rem;
+          text-align: right;
+        }
+      }
+
+      .day-col {
+        position: relative;
+        border-left: 1px solid lightgrey;
+
+        .day {
+          position: relative;
+          margin-right: 10%;
+        }
+
+        .time-selector {
+          position: absolute;
+          width: 100%;
+          background-color: rgba(0, 0, 255, 0.3);
+        }
+      }
+    }
+  }
+}
+
+/* МІСЯЦЬ */
+
+#month-placeholder {
+
+  thead tr td {
+    text-align: center;
+  }
+
+  tbody tr td {
+    position: relative;
+    width: 14.286%;
+    padding: 5px;
+  }
+
+  .month-day-caption {
+    padding-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .day-block {
+    height: 125px;
+    min-width: 140px;
+    border: 1px solid lightgrey;
+    background-color: white;
+    overflow: hidden;
+
+    .day-wrapper {
+      height: calc(~"100% - 20px");
+      margin: 10px;
+      overflow-y: hidden;
+    }
+
+    &.alien {
+      background-color: lightgrey;
+    }
+
+    .day-header {
+      position: relative;
+
+      .date-number {
+        display: inline-block;
+        position: absolute;
+        font-size: 2rem;
+        transition: 400ms;
+      }
+    }
+
+    .badge {
+      opacity: 1;
+      cursor: default;
+      transition: 400ms;
+    }
+
+    ul {
+      height: 40px;
+      margin-bottom: 0;
+      margin-top: 60px;
+
+      .event-item {
+        border: 1px solid #5C935C;
+        margin-top: -1px;
+        padding: 3px 5px;
+        background-color: #90ee90;
+        line-height: 14px;
+        font-size: .8rem;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        cursor: default;
+        overflow: hidden;
+
+        &:first-child {
+          margin-top: 0;
+        }
+
+        .time {
+          font-weight: bold;
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    &:hover {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: inherit;
+      min-height: 125px;
+      margin: 5px;
+      background-color: antiquewhite;
+      z-index: 10;
+
+      .badge {
+        opacity: 0;
+      }
+
+      .date-number {
+        margin-top: -8px;
+        font-size: 3rem;
+      }
+
+      ul {
+        height: inherit;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+    }
+  }
+}
+
+/* РІК */
+
+#year-placeholder {
+
+  .month-name {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .month {
+    float: left;
+    width: 360px;
+    margin: 20px;
+
+    table {
+      height: 230px;
+      border: 1px solid #d3d3d3;
+
+      td {
+        padding: 5px;
+        border-radius: 0;
+        text-align: center;
+      }
+
+      thead .holiday {
+        background-color: rgba(255, 108, 108, 0.28);
+      }
+
+      tbody .holiday .date-number a {
+        color: red;
+      }
+
+      .day-wrapper.events {
+        border: 2px dotted gray;
+      }
+    }
+  }
+
+}
+
+/* МОДАЛЬНЕ ВІКНО РЕДАГУВАННЯ ПОДІЇ */
+
+#editevent {
+
+  .modal-footer {
+
+    .btn {
+      margin: 6px 20px 6px 0;
+    }
+
+    #delete-event {
+      float: left;
+      margin-left: 20px;
+      margin-right: 10px;
+    }
+
+    #export-event {
+      float: left;
+      margin-left: 0;
+    }
+  }
+
+}
+
