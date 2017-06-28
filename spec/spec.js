@@ -1,4 +1,5 @@
 var unit = require('../src/js/stats');
+var math = require('../src/components/parts/comp1');
 
 describe("life tests", function() {
 	it("Перевірка розрахунку меж колонії", function() {
@@ -17,5 +18,13 @@ describe("life tests", function() {
 	it("Перевірка обробки помилок вихідних даних", function() {
 		var res = unit.calcStats(null);
 		expect(res).toBe(null);
+	});
+});
+
+describe("math", function() {
+	it("Перевірка множення", function() {
+		expect(math.mul(3, 5)).toBe(15);
+		expect(math.mul(3, 0)).toBe(0);
+		expect(math.mul(3, 1)).toBe(3);
 	});
 });

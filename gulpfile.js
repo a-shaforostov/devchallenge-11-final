@@ -19,8 +19,12 @@ const eslint = require('gulp-eslint');
 const jsdoc = require("gulp-jsdoc3");
 const sprite = require('gulp-sprite-generator');
 
+const webmake = require('gulp-webmake');
+const replace = require('gulp-replace');
+
 const path = {
     build: {
+		components: 'public/components/',
         html: 'public/',
         js: 'public/js/',
         css: 'public/style/',
@@ -29,6 +33,10 @@ const path = {
         img: '/images'
     },
     src: {
+		components_js: ['src/components/**/*.js', '!src/components/parts/**/*'],
+		components_js_parts: ['src/js/**/*.js', 'src/components/**/*.js'],
+		// components_less: ['src/components/parts/**/*.less'],
+		// components_html: ['src/components/parts/**/*.html'],
         html: 'src/*.html',
         js: ['src/js/**/*.js'],
         less: ['src/style/**/*.less'],
@@ -37,6 +45,7 @@ const path = {
         img: ['src/images/*.*']
     },
     watch: {
+		components: 'src/components/**/*',
         html: 'src/**/*.html',
         js: 'src/js/**/*.js',
         style: 'src/style/**/*.less',
@@ -44,7 +53,7 @@ const path = {
         sprites_img: 'src/images/sprites/*.png',
         img: 'src/images/*.*'
     },
-    clean: ['public/js', 'public/style', 'public/html.*', 'documentation-output', 'public/images'],
+    clean: ['public/js', 'public/style', 'public/html.*', 'documentation-output', 'public/images', 'public/components'],
 };
 
 gulp.task('js:lint', () => {
@@ -62,9 +71,19 @@ gulp.task('html:build', () => {
         .pipe(gulp.dest(path.build.html));
 });
 
-gulp.task('js:build', () => {
+gulp.task('js:build', ['components:build', 'jsdoc:build'], () => {
     console.log(production() ? "production environment" : "development environment");
     return gulp.src(path.src.js)
+        .pipe(plumber())
+        .pipe(babel({
+            presets: ['es2015']
+        }))
+        .pipe(production(uglify()))
+        .pipe(gulp.dest(path.build.js));
+});
+
+gulp.task('jsdoc:build', () => {
+    return gulp.src(path.src.components_js_parts)
         .pipe(plumber())
         .pipe(development(jsdoc({
             opts: {
@@ -72,11 +91,23 @@ gulp.task('js:build', () => {
                 template: 'node_modules/jsdoc/templates/default'
             }
         })))
-        .pipe(babel({
-            presets: ['es2015']
-        }))
-        .pipe(production(uglify()))
         .pipe(gulp.dest(path.build.js));
+});
+
+gulp.task('components:build', function () {
+	return gulp.src(path.src.components_js)
+		.pipe(plumber())
+
+		.pipe(webmake({
+			ext: ['handlebars', 'less']
+		}))
+		.pipe(replace('.less":', '.css":'))                     // fix webmake-less issue
+		.pipe(replace('.hbs":', '.js":'))                       // fix webmake-handlebars issue
+		.pipe(babel({
+			presets: ['es2015']
+		}))
+		.pipe(production(uglify()))
+		.pipe(gulp.dest(path.build.components));
 });
 
 gulp.task('style:build', () => {
@@ -123,10 +154,10 @@ gulp.task('watch', () => {
     watch([path.watch.style], () => {
         gulp.start('style:build');
     });
-    watch([path.watch.js], () => {
+    watch([path.watch.js, path.watch.components], () => {
         gulp.start('js:build');
     });
-    watch([path.watch.sprites_css, path.watch.sprites_img], () => {
+	watch([path.watch.sprites_css, path.watch.sprites_img], () => {
         gulp.start('image:sprites');
     });
     watch([path.watch.img], () => {

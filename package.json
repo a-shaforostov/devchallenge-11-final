@@ -13,15 +13,19 @@
     "gulp-jsdoc3": "^1.0.1",
     "gulp-less": "^3.3.0",
     "gulp-plumber": "^1.1.0",
+    "gulp-replace": "^0.6.1",
     "gulp-rigger": "^0.5.8",
     "gulp-sourcemaps": "^2.4.1",
     "gulp-sprite-generator": "^0.2.3",
     "gulp-uglify": "^2.0.1",
     "gulp-watch": "^4.3.11",
+    "gulp-webmake": "0.0.41",
     "http-server": "^0.9.0",
     "jasmine": "^2.6.0",
     "jsdoc": "^3.4.3",
-    "less-plugin-clean-css": "^1.5.1"
+    "less-plugin-clean-css": "^1.5.1",
+    "webmake-handlebars": "^0.1.1",
+    "webmake-less": "^0.2.0"
   },
   "scripts": {
     "test": "node node_modules/jasmine/bin/jasmine.js",
