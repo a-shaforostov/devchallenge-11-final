@@ -73,6 +73,7 @@ $(document).on('click', '#create-note-ok', (event) => {
 				name: form.elements.name.value,
 				desc: form.elements.desc.simplemde.value(),
 				state: form.elements.state.value,
+				people: [form.elements.people.value],
 			});
 		} else {
 			// Створити квиток
@@ -80,6 +81,7 @@ $(document).on('click', '#create-note-ok', (event) => {
 				name: form.elements.name.value,
 				desc: form.elements.desc.simplemde.value(),
 				state: form.elements.state.value,
+				people: [form.elements.people.value],
 			});
 			testStatuses[0].notes.push(notesList.notes[noteId]);
 		}
@@ -109,8 +111,9 @@ function createEditNoteForm() {
 	let template = Handlebars.compile(source);
 	$place.html(template({
 		statuses: testStatuses,
+		people: testPeople,
 	}));
-		$('select').material_select();
+	$('select').material_select();
 	let element = $($place).find('textarea')[0];
 	let simplemde = new SimpleMDE({element: element});
 	element.simplemde = simplemde;
@@ -123,6 +126,7 @@ function createNewNote() {
 	form.elements.name.value = '';
 	form.elements.desc.simplemde.value('');
 	form.elements.state.value = testStatuses[0].name;
+	form.elements.people.value = [];
 
 	$('#delete-note').addClass('disabled');
 	$('#editnote').modal('open');
@@ -136,6 +140,7 @@ function editNote(id) {
 	form.elements.name.value = note.name;
 	form.elements.desc.simplemde.value(note.desc);
 	form.elements.state.value = note.state;
+	form.elements.people.value = note.people;
 
 	$('#delete-note').removeClass('disabled');
 	$('#editnote').modal('open');

@@ -17,7 +17,7 @@ class NotesList {
 		let note = new Note(options);
 		note.id = this.idCounter;
 		this.notes[this.idCounter] = note;
-		note.people = [testPeople[(Math.random()*2).toFixed(0)]];
+		// note.people = [testPeople[(Math.random()*2).toFixed(0)]];
 
 		// Збереження в localStorage
 		localStorage.setItem('note-' + note.id, JSON.stringify(note));
@@ -32,11 +32,12 @@ class NotesList {
 	 * @param desc
 	 * @param state
 	 */
-	updateNote({id, name, desc, state}) {
+	updateNote({id, name, desc, state, people}) {
 		let note = this.notes[id];
 		note.name = name;
 		note.desc = desc;
 		note.state = state;
+		note.people = people;
 
 		// Збереження в localStorage
 		localStorage.setItem('note-' + id, JSON.stringify(note));

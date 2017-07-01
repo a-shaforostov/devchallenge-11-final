@@ -37,7 +37,7 @@
                      <div class="description">{{desc}}</div>
                      <div class="people">
                          {{#each people}}
-                         <div class="person">{{name}}</div>
+                         <div class="person">{{this}}</div>
                          {{/each}}
                      </div>
                  </li>
@@ -59,25 +59,36 @@
                 <form class="col s12" action="#">
                     <input type="hidden" name="id">
                     <div class="row">
-                        <div class="col s6">
+                        <div class="col s12">
                             <label for="name">Назва</label>
                             <input id="name" type="text" class="validate" name="name" required>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s6">
-                            <label for="desc">Опис</label>
-                            <textarea id="desc" class="materialize-textarea validate" name="desc"></textarea>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s6">
+                        <div class="input-field col s12">
                             <select name="state" id="state" class="validate" required>
                                 {{#each statuses}}
                                 <option value="{{name}}" {{#if @first}}selected{{/if}}>{{name}}</option>
                                 {{/each}}
                             </select>
                             <label>Статус</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select name="people" id="people" class="validate">
+                                <option value="" disabled selected>Щоб змінити відповідального оберіть його зі списку</option>
+                                {{#each people}}
+                                <option value="{{name}}">{{name}}</option>
+                                {{/each}}
+                            </select>
+                            <label>Відповідальний</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <label for="desc">Опис</label>
+                            <textarea id="desc" class="materialize-textarea validate" name="desc"></textarea>
                         </div>
                     </div>
                 </form>
@@ -100,7 +111,6 @@
     <script src="js/people.js"></script>
     <script src="js/notes.js"></script>
     <script src="js/statuses.js"></script>
-    <script src="js/test-data.js"></script>
     <script src="js/view.js"></script>
     <script src="js/controller.js"></script>
 </body>
