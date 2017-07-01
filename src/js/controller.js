@@ -1,7 +1,5 @@
-/* global eventList, moment, weekView, Materialize, EventsList, DayView, MonthView, YearView */
+/* global View, Materialize, notesList, testStatuses, Handlebars, SimpleMDE */
 /* eslint-disable no-invalid-this */
-
-moment.locale('uk');
 
 // Модальне вікно редагування квитка
 $('#editnote').modal({
@@ -60,14 +58,14 @@ $(document).on('click', '#create-note-ok', (event) => {
 			notesList.updateNote({
 				id: form.elements.id.value,
 				name: form.elements.name.value,
-				desc: form.elements.desc.value,
+				desc: form.elements.desc.simplemde.value(),
 				state: form.elements.state.value,
 			});
 		} else {
 			// Створити квиток
 			let noteId = notesList.createNote({
 				name: form.elements.name.value,
-				desc: form.elements.desc.value,
+				desc: form.elements.desc.simplemde.value(),
 				state: form.elements.state.value,
 			});
 			testStatuses[0].notes.push(notesList.notes[noteId]);
@@ -88,14 +86,6 @@ $(document).on('click', '#delete-note', () => {
 });
 
 
-
-
-// При зміні розміру вікна оновити довгі події бо вони позиціоновані абсолютно
-// $(window).on('resize', () => {
-// 	if (['day', 'week'].indexOf(viewMode) !== -1) view.renderLongEvents();
-// });
-//
-
 // Вимкнути відправку форми
 $('form').on('submit', (e) => e.preventDefault());
 
@@ -104,11 +94,12 @@ function createEditNoteForm() {
 	let source = document.getElementById('editnote-template').innerHTML;
 	let template = Handlebars.compile(source);
 	$place.html(template({
-		statuses: testStatuses
+		statuses: testStatuses,
 	}));
-	setTimeout(function() {
 		$('select').material_select();
-	}, 50);
+	let element = $($place).find('textarea')[0];
+	let simplemde = new SimpleMDE({element: element});
+	element.simplemde = simplemde;
 }
 
 function createNewNote() {
@@ -116,7 +107,7 @@ function createNewNote() {
 	let form = $('#editnote form')[0];
 	form.elements.id.value = '';
 	form.elements.name.value = '';
-	form.elements.desc.value = '';
+	form.elements.desc.simplemde.value('');
 	form.elements.state.value = testStatuses[0].name;
 
 	$('#delete-note').addClass('disabled');
@@ -129,7 +120,7 @@ function editNote(id) {
 	let note = notesList.notes[id];
 	form.elements.id.value = id;
 	form.elements.name.value = note.name;
-	form.elements.desc.value = note.desc;
+	form.elements.desc.simplemde.value(note.desc);
 	form.elements.state.value = note.state;
 
 	$('#delete-note').removeClass('disabled');

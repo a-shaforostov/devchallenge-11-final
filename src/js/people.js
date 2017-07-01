@@ -1,7 +1,7 @@
 class Person {
 
 	constructor(options) {
-		var opts = options || {};
-		this.name = opts.name || 'John Doe'
+		let opts = options || {};
+		this.name = opts.name || 'John Doe';
 	}
 }

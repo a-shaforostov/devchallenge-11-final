@@ -33,6 +33,14 @@ class NotesList {
 		delete this.notes[id];
 
 	}
+
+	changeState(id, newState) {
+		let note = this.notes[id];
+		note.state = newState;
+
+		// Збереження в localStorage
+		localStorage.setItem('note-' + id, JSON.stringify(note));
+	}
 }
 
 class Note {

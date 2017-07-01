@@ -13,17 +13,10 @@
 
     <script src="vendors/lodash.min.js"></script>
     <script src="vendors/jquery-3.2.1.min.js"></script>
-    <script src="vendors/datetimepicker/jquery.datetimepicker.full.min.js"></script>
-    <script src="vendors/moment-with-locales.min.js"></script>
 </head>
 <body>
 
     <header class="clearfix">
-        <!--<div style="float: left; margin-top: 10px">-->
-            <!--<a href="#" class="img-sprite img-facebook"></a>-->
-            <!--<a href="#" class="img-sprite img-google-plus"></a>-->
-            <!--<a href="#" class="img-sprite img-twitter"></a>-->
-        <!--</div>-->
         <button class="waves-effect waves-light btn" id="create-note">Створити квиток <sub>Ins</sub></button>
     </header>
 
@@ -55,46 +48,8 @@
          {{/each}}
     </script>
 
-    <!--Шаблон місяця-->
-    <script type="text/x-handlebars-template" id="month-template">
-        <div class="month">
-            <table>
-                <thead>
-                    <tr>
-                        {{#each daysOfWeek}}<td class="month-day-caption">{{this}}</td>{{/each}}
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each days}}
-                    <tr>
-                        {{#each this}}
-                        <td>
-                            <div class="day-block {{#if this.alien}}alien{{/if}}" title="Створити подію">
-                                <div class="day-wrapper">
-                                    <div class="day-header">
-                                        <div class="date-number"><a href="#" data-date="{{this.dateText}}" title="Перейти на дату">{{this.day}}</a></div>
-                                        {{#if this.eventCount}}<span class="new badge" data-badge-caption="" title="Кількість подій">+{{this.eventCount}}</span>{{/if}}
-                                    </div>
-                                    <ul>
-                                        {{#each this.events}}
-                                        <li class="event-item" data-id="{{this.id}}" title="Редагувати подію">
-                                            <span class="time">{{this.beginText}}-{{this.endText}}</span>
-                                            <span class="desc">{{this.desc}}</span>
-                                        </li>
-                                        {{/each}}
-                                    </ul>
-                                </div>
-                            </div>
-                        </td>
-                        {{/each}}
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        </div>
-    </script>
 
-    <!-- Модальне вікно створення/редагування події -->
+    <!-- Модальне вікно створення/редагування квитка -->
     <dialog id="editnote" class="modal"></dialog>
 
     <script type="text/x-handlebars-template" id="editnote-template">
@@ -142,8 +97,6 @@
     <script src="vendors/handlebars-v4.0.10.js"></script>
     <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
     <script src="vendors/jquery-ui.min.js"></script>
-
-    <script src="js/hbs-helpers.js"></script>
 
     <script src="js/people.js"></script>
     <script src="js/notes.js"></script>
