@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Final</title>
     <link rel="stylesheet" href="vendors/materialize-v0.98.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <link rel="stylesheet" href="style/sprites.css">
     <link rel="stylesheet" href="style/core.css">
 
@@ -18,89 +19,40 @@
 <body>
 
     <header class="clearfix">
-        <div style="float: left; margin-top: 10px">
-            <a href="#" class="img-sprite img-facebook"></a>
-            <a href="#" class="img-sprite img-google-plus"></a>
-            <a href="#" class="img-sprite img-twitter"></a>
-        </div>
-        <button class="waves-effect waves-light btn" id="create-event">Додати подію</button>
-        <div class="nav-block">
-            <button class="prev-period-button btn">&lt;</button>
-            <span class="period-label"></span>
-            <button class="next-period-button btn">&gt;</button>
-        </div>
-        <div class="scale">
-            <div class="btn-group">
-                <a class="waves-effect waves-light btn" data-period="day">День</a>
-                <a class="waves-effect waves-light btn selected" data-period="week">Тиждень</a>
-                <a class="waves-effect waves-light btn" data-period="month">Місяць</a>
-                <a class="waves-effect waves-light btn" data-period="year">Рік</a>
-            </div>
-        </div>
+        <!--<div style="float: left; margin-top: 10px">-->
+            <!--<a href="#" class="img-sprite img-facebook"></a>-->
+            <!--<a href="#" class="img-sprite img-google-plus"></a>-->
+            <!--<a href="#" class="img-sprite img-twitter"></a>-->
+        <!--</div>-->
+        <button class="waves-effect waves-light btn" id="create-note">Створити квиток <sub>Ins</sub></button>
     </header>
 
-    <main>
+    <main class="container">
 
-        <section id="week-placeholder"  class="noselect view-content clearfix"></section>
-        <section id="month-placeholder" class="noselect view-content clearfix"></section>
-        <section id="year-placeholder"  class="noselect view-content clearfix"></section>
+        <ul class="board noselect statusSortable"></ul>
 
     </main>
 
-    <!--Шаблон тижня та дня-->
-     <script type="text/x-handlebars-template" id="week-template">
-        <div class="week">
-
-            <!--Заголовки днів-->
-            <table class="grid-table">
-                <thead>
-                <tr class="day-captions">
-                    <td width="50px"></td>
-                    {{#each days}}
-                    <td class="day-col">{{this}}</td>
-                    {{/each}}
-                </tr>
-                </thead>
-            </table>
-
-            <!--Поле для довгих подій-->
-            <div class="long-wrapper">
-                <div class="long-events"></div>
-                <table class="header-table l-events">
-                    <tbody>
-                    <tr height="1" class="week-full">
-                        <td width="50px"></td>
-                        {{#each days}}<td class="day-full" data-index="{{@index}}"><div class="day"></div></td>{{/each}}
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!--Поле для коротких подій-->
-            <table class="grid-table s-events">
-                <tbody>
-                    <tr height="1">
-                        <td width="50px">
-                        </td>
-                        <td colspan="{{days.length}}">
-                            <div class="hours-wrapper">
-                                <div class="hours">
-                                    {{#times 24}}<div class="hour-line"><div class="half"></div></div>{{/times}}
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="hours-labels">
-                                {{#times 24}}<div class="hour-label">{{pad this 2}}:00</div>{{/times}}
-                            </div>
-                        </td>
-                        {{#each days}}<td class="day-col" data-index="{{@index}}"><div class="day"></div></td>{{/each}}
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <!--Шаблон дошки-->
+     <script type="text/x-handlebars-template" id="statuses-template">
+         {{#each statuses}}
+         <li class="status" data-name="{{name}}">
+             <div class="status__caption">{{name}}</div>
+             <ul class="status__body connectedSortable">
+                 {{#each notes}}
+                 <li class="note" data-id="{{id}}">
+                     <div class="name">{{name}}</div>
+                     <div class="description">{{desc}}</div>
+                     <div class="people">
+                         {{#each people}}
+                         <div class="person">{{name}}</div>
+                         {{/each}}
+                     </div>
+                 </li>
+                 {{/each}}
+             </ul>
+         </li>
+         {{/each}}
     </script>
 
     <!--Шаблон місяця-->
@@ -142,59 +94,36 @@
         </div>
     </script>
 
-    <!--Шаблон року-->
-    <script type="text/x-handlebars-template" id="year-template">
-        {{#each months}}
-        <div class="month">
-            <div class="month-name">{{this.monthName}}</div>
-            <table>
-                <thead>
-                    <tr>
-                        {{#each ../daysOfWeek}}<td class="year-day-caption {{#iff @index '>' 4}}holiday{{/iff}}">{{this}}</td>{{/each}}
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each days}}
-                    <tr>
-                        {{#each this}}
-                        <td class="{{#if holiday}}holiday{{/if}}">
-                            <div class="day-block" title="Перейти на день">
-                                <div class="day-wrapper {{#if events}}events{{/if}}">
-                                    <div class="date-number"><a href="#" data-date="{{this.dateText}}" title="Перейти на дату">{{this.day}}</a></div>
-                                </div>
-                            </div>
-                        </td>
-                        {{/each}}
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        </div>
-        {{/each}}
-    </script>
-
     <!-- Модальне вікно створення/редагування події -->
-    <dialog id="editevent" class="modal">
+    <dialog id="editnote" class="modal"></dialog>
+
+    <script type="text/x-handlebars-template" id="editnote-template">
         <div class="modal-content">
-            <h4>Редагування події</h4>
+            <h4>Редагування квитка</h4>
 
             <div class="row">
                 <form class="col s12" action="#">
                     <input type="hidden" name="id">
                     <div class="row">
                         <div class="col s6">
-                            <label for="date1">Час початку</label>
-                            <input id="date1" type="datetime-local" class="validate" name="date1" required>
-                        </div>
-                        <div class="col s6">
-                            <label for="date2">Час завершення</label>
-                            <input id="date2" type="datetime-local" class="validate" name="date2" required>
+                            <label for="name">Назва</label>
+                            <input id="name" type="text" class="validate" name="name" required>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s12">
-                            <input id="description" type="text" class="validate" name="desc" required>
-                            <label for="description">Опис події</label>
+                        <div class="col s6">
+                            <label for="desc">Опис</label>
+                            <textarea id="desc" class="materialize-textarea validate" name="desc"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <select name="state" id="state" class="validate" required>
+                                {{#each statuses}}
+                                <option value="{{name}}" {{#if @first}}selected{{/if}}>{{name}}</option>
+                                {{/each}}
+                            </select>
+                            <label>Статус</label>
                         </div>
                     </div>
                 </form>
@@ -202,23 +131,25 @@
 
         </div>
         <footer class="modal-footer">
-            <a href="#" class="modal-action modal-close waves-effect waves-red btn red" id="delete-event">Видалити</a>
-            <a href="#" class="modal-action modal-close waves-effect waves-green btn" id="export-event">Експорт в .ics</a>
+            <a href="#" class="modal-action modal-close waves-effect waves-red btn red" id="delete-note">Видалити</a>
             <a href="#" class="modal-action modal-close waves-effect waves-white btn white black-text">Відмінити</a>
-            <a href="#" class="modal-action modal-close waves-effect waves-green btn" id="create-event-ok">Зберегти</a>
+            <a href="#" class="modal-action modal-close waves-effect waves-green btn" id="create-note-ok">Зберегти</a>
         </footer>
-    </dialog>
+    </script>
+
 
     <script src="vendors/materialize-v0.98.2/js/materialize.min.js"></script>
     <script src="vendors/handlebars-v4.0.10.js"></script>
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script src="vendors/jquery-ui.min.js"></script>
+
     <script src="js/hbs-helpers.js"></script>
-    <script src="js/notifications.js"></script>
-    <script src="js/events-model.js"></script>
-    <script src="js/custom-view.js"></script>
-    <script src="js/day-view.js"></script>
-    <script src="js/month-view.js"></script>
-    <script src="js/year-view.js"></script>
+
+    <script src="js/people.js"></script>
+    <script src="js/notes.js"></script>
+    <script src="js/statuses.js"></script>
+    <script src="js/test-data.js"></script>
+    <script src="js/view.js"></script>
     <script src="js/controller.js"></script>
-    <script src="components/main.js"></script>
 </body>
 </html>
