@@ -23,10 +23,6 @@ http://localhost:8081
 
 *npm run dev-build*
 
-- unit тести
-
-*npm test*
-
 - Документація jsdoc проекта: 
 
 *documentation-output/index.html*
@@ -54,26 +50,43 @@ http://localhost:8082
 
 ###Виконані завдання:
 
+1) дошка с колонками “Зробити”, “В процесі”, “Виконано”
 
+2) створення квитка у колонці “Зробити”. Квиток повинен мати як мінімум поля
+“Назва”, “Опис”, “Статус”
+
+3) редагування, та видалення квитка
+
+4) зміна статусу квитка (через drag’n’drop квитка між колонками)
+
+5) зміна порядку колонок
+
+8. створення фейкової бази користувачів, з виведенням довільного користувача
+
+11) підтримка клавіатурних комбінацій для створення квитків
+
+13.  Markdown редактор поля “Опис”
+
+Додатково:
+
+Використання лінтера, документування з jsdoc, детальний опис проекта
 
 ###Використані інструменти:
 
-Service Worker, Local Storage, Notifications API, MVC Pattern, Handlebars templating, html5, es2015 класи, jsdoc документація, лінтер eslint, препроцесор less, gulp, sprites, gulp-sprite-generator, unit-тести, сервер статичних файлів
+Local Storage, Markdown Editor, MVC Pattern, Handlebars templating, html5, es2015 класи, jsdoc документація, лінтер eslint, препроцесор less, gulp, сервер статичних файлів, github
 
 на сторінці:
 + jquery
++ jquery-ui
 + handlebars
 + lodash
-+ moment
 + materializecss
-+ https://github.com/nwcell/ics.js/ - для експорту подій
++ https://github.com/sparksuite/simplemde-markdown-editor - для редагування MD
 
 для розробки та збирання:
 + gulp
 + less
 + eslint (eslint:recommended, google)
 + babel (es2015)
-+ jasmin - unit тести 
 + jsdoc - документація
-+ gulp-sprite-generator
 + http-server - локальний сервер статичних файлів

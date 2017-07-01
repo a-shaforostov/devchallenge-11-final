@@ -10,8 +10,21 @@ $('#editnote').modal({
 });
 
 // Ініціалізуємо дошку
-$(function() {
-});
+
+let testStatuses = [
+	new Status({name: 'Зробити'}),
+	new Status({name: 'В процесі'}),
+	new Status({name: 'Виконано'}),
+];
+
+let testPeople = [
+	new Person({name: 'Петренко Петро'}),
+	new Person({name: 'Іванов Іван'}),
+	new Person({name: 'Павленко Павло'}),
+];
+
+let notesList = new NotesList();
+notesList.loadNotes();
 
 // Створити представлення
 let view = new View();
@@ -88,6 +101,7 @@ $(document).on('click', '#delete-note', () => {
 
 // Вимкнути відправку форми
 $('form').on('submit', (e) => e.preventDefault());
+
 
 function createEditNoteForm() {
 	let $place = $('#editnote');
